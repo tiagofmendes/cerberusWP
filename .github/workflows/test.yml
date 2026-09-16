@@ -1,0 +1,40 @@
+name: CI - Sterilizer & Antidote Validation Suite
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-sterilizer:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Set up PHP 8.1
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        extensions: mysqli, pdo_mysql, gd, zip
+
+    - name: Run Sandbox Sterilization Test Suite
+      run: |
+        python hosting-sterilizer/test_sandbox.py
+
+    - name: Validate WordPress Plugin & Sterilizer Syntax
+      run: |
+        php -l wordpress-plugin/cerberus-sentinel/antidoto-sentinela.php
+        php -l wordpress-plugin/cerberus-sentinel/mu-antidote/000-antidoto-vaccine.php
+        php -l wordpress-plugin/cerberus-sentinel/includes/class-sentinela-core-guard.php
+        php -l wordpress-plugin/cerberus-sentinel/includes/class-sentinela-db-auditor.php
+        php -l wordpress-plugin/cerberus-sentinel/includes/class-sentinela-mu-guardian.php
+        php -l hosting-sterilizer/cerberus-sterilizer.php
+        php -l hosting-sterilizer/hostgator-sterilizer.php

@@ -1,0 +1,50 @@
+# ==============================================================================
+# CerberusWP Sentinel - .gitignore
+# ==============================================================================
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Backups and Archives (Prevents committing 2GB zips or dumps)
+*.zip
+!cerberus-sentinel.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.sql
+*.sql.gz
+
+# Temporary, Logs and System Dumps
+logs/
+*.log
+error_log
+quarantine_backup/
+quarantine_*/
+malware.txt
+scanreport.txt
+scratch/
+.tmp_*
+
+# Exclude Local Docker Lab & Management Scripts
+docker-lab/
+manage-lab.bat
+manage-lab.ps1
+
+# PHP / Composer
+vendor/
+composer.lock
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+env/
+venv/
+.venv/
